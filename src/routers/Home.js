@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-const Home = () => {
+const Home = ({ toDos }) => {
+  console.log(toDos);
   const [text, setText] = useState('');
 
   const onChange = (e) => {
@@ -20,8 +23,17 @@ const Home = () => {
         <input type='text' value={text} onChange={onChange} />
         <button>Add</button>
       </form>
+      <ul>{JSON.stringify(toDos)}</ul>
     </>
   );
 };
 
-export default Home;
+Home.propTypes = {
+  toDos: PropTypes.instanceOf(Array).isRequired,
+};
+
+const mapStateToProps = (state) => {
+  return { toDos: state };
+};
+
+export default connect(mapStateToProps)(Home);
