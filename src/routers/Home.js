@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { actionCreators } from '../store';
 
-const Home = ({ toDos }) => {
-  console.log(toDos);
+const Home = ({ toDos, addToDo }) => {
   const [text, setText] = useState('');
 
   const onChange = (e) => {
@@ -13,6 +13,7 @@ const Home = ({ toDos }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(text);
+    addToDo(text);
     setText('');
   };
 
@@ -30,10 +31,17 @@ const Home = ({ toDos }) => {
 
 Home.propTypes = {
   toDos: PropTypes.instanceOf(Array).isRequired,
+  addToDo: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
   return { toDos: state };
 };
 
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToDo: (text) => dispatch(actionCreators.addToDo(text)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
