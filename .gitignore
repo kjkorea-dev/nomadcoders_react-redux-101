@@ -6,6 +6,7 @@
 .pnp.js
 .eslintrc.json
 .prettierrc
+.vscode
 
 # testing
 /coverage
