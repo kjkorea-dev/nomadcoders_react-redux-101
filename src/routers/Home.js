@@ -39,6 +39,7 @@ Home.propTypes = {
 };
 
 const mapStateToProps = (state) => {
+  console.log(typeof state, state);
   return { toDos: state };
 };
 
