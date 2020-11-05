@@ -1,35 +1,17 @@
-import { createAction, createReducer, configureStore } from '@reduxjs/toolkit';
-import { createStore } from 'redux';
+import { configureStore, createSlice } from '@reduxjs/toolkit';
 
-const addToDo = createAction('ADD');
-const deleteToDo = createAction('DELETE');
-
-// * map object : works only in javascript
-// const reducer = createReducer([], {
-//   [addToDo]: (state, action) => {
-//     state.push({ text: action.payload, id: Date.now() });
-//   },
-//   [deleteToDo]: (state, action) =>
-//     state.filter((toDo) => toDo.id !== action.payload),
-// });
-
-// * builder callback : preferred
-const reducer = createReducer([], (builder) => {
-  builder
-    .addCase(addToDo, (state, action) => {
+const toDosSlice = createSlice({
+  name: 'toDos',
+  initialState: [],
+  reducers: {
+    add: (state, action) => {
       state.push({ text: action.payload, id: Date.now() });
-    })
-    .addCase(deleteToDo, (state, action) =>
-      state.filter((toDo) => toDo.id !== action.payload)
-    );
+    },
+    remove: (state, action) =>
+      state.filter((toDo) => toDo.id !== action.payload),
+  },
 });
 
-// const store = createStore(reducer);
-const store = configureStore({ reducer });
+export const { add, remove } = toDosSlice.actions;
 
-export const actionCreators = {
-  addToDo,
-  deleteToDo,
-};
-
-export default store;
+export default configureStore({ reducer: toDosSlice.reducer });
